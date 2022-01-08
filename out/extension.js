@@ -209,7 +209,7 @@ function onDidChangeConfiguration(instanceManager, e) {
     }
 }
 function getEditorTitle(document) {
-    return `CSV edit ${path.basename(document.fileName)}`;
+    return `Edit - ${path.basename(document.fileName)}`;
 }
 function createNewEditorInstance(context, activeTextEditor, instanceManager) {
     var _a, _b;

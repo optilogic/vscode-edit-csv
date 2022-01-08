@@ -59,100 +59,18 @@
 			{
 				"command": "edit-csv.edit",
 				"category": "CSV",
-				"title": "Edit csv"
-			},
-			{
-				"command": "edit-csv.goto-source",
-				"category": "CSV",
-				"title": "Go to csv source file"
-			},
-			{
-				"command": "edit-csv.apply",
-				"category": "CSV",
-				"title": "Apply changes to source file"
-			},
-			{
-				"command": "edit-csv.applyAndSave",
-				"category": "CSV",
-				"title": "Apply changes to source file and save"
+				"title": "Edit",
+				"icon": {
+					"light": "./images/edit_light.png",
+					"dark": "./images/edit_dark.png"
+				}
 			}
 		],
 		"menus": {
-			"explorer/context": [
+			"commandPalette": [
 				{
-					"when": "resourceLangId == csv",
-					"command": "edit-csv.edit",
-					"group": "navigation"
-				},
-				{
-					"when": "resourceLangId == tsv",
-					"command": "edit-csv.edit",
-					"group": "navigation"
-				},
-				{
-					"when": "resourceLangId == CSV",
-					"command": "edit-csv.edit",
-					"group": "navigation"
-				},
-				{
-					"when": "resourceLangId == TSV",
-					"command": "edit-csv.edit",
-					"group": "navigation"
-				},
-				{
-					"when": "resourceLangId == 'CSV (semicolon)'",
-					"command": "edit-csv.edit",
-					"group": "navigation"
-				},
-				{
-					"when": "resourceLangId == 'csv (semicolon)'",
-					"command": "edit-csv.edit",
-					"group": "navigation"
-				},
-				{
-					"when": "resourceLangId == 'csv (pipe)'",
-					"command": "edit-csv.edit",
-					"group": "navigation"
-				},
-				{
-					"when": "resourceLangId == 'csv (whitespace)'",
-					"command": "edit-csv.edit",
-					"group": "navigation"
-				},
-				{
-					"when": "resourceLangId == 'csv (tilde)'",
-					"command": "edit-csv.edit",
-					"group": "navigation"
-				},
-				{
-					"when": "resourceLangId == 'csv (caret)'",
-					"command": "edit-csv.edit",
-					"group": "navigation"
-				},
-				{
-					"when": "resourceLangId == 'csv (colon)'",
-					"command": "edit-csv.edit",
-					"group": "navigation"
-				},
-				{
-					"when": "resourceLangId == 'csv (double quote)'",
-					"command": "edit-csv.edit",
-					"group": "navigation"
-				},
-				{
-					"when": "resourceLangId == 'csv (equals)'",
-					"command": "edit-csv.edit",
-					"group": "navigation"
-				},
-				{
-					"when": "resourceLangId == 'csv (dot)'",
-					"command": "edit-csv.edit",
-					"group": "navigation"
-				},
-				{
-					"when": "resourceLangId == 'csv (hyphen)'",
-					"command": "edit-csv.edit",
-					"group": "navigation"
+						"command": "edit-csv.edit",
+						"when": "false"
 				}
 			],
 			"editor/title": [
@@ -178,83 +96,6 @@
 				},
 				{
 					"when": "editorLangId == 'CSV (semicolon)' && resourceScheme != csv-edit",
-					"command": "edit-csv.edit",
-					"group": "navigation"
-				},
-				{
-					"when": "editorLangId == 'csv (semicolon)' && resourceScheme != csv-edit",
-					"command": "edit-csv.edit",
-					"group": "navigation"
-				},
-				{
-					"when": "editorLangId == 'csv (pipe)' && resourceScheme != csv-edit",
-					"command": "edit-csv.edit",
-					"group": "navigation"
-				},
-				{
-					"when": "editorLangId == 'csv (whitespace)' && resourceScheme != csv-edit",
-					"command": "edit-csv.edit",
-					"group": "navigation"
-				},
-				{
-					"when": "editorLangId == 'csv (tilde)' && resourceScheme != csv-edit",
-					"command": "edit-csv.edit",
-					"group": "navigation"
-				},
-				{
-					"when": "editorLangId == 'csv (caret)' && resourceScheme != csv-edit",
-					"command": "edit-csv.edit",
-					"group": "navigation"
-				},
-				{
-					"when": "editorLangId == 'csv (colon)' && resourceScheme != csv-edit",
-					"command": "edit-csv.edit",
-					"group": "navigation"
-				},
-				{
-					"when": "editorLangId == 'csv (double quote)' && resourceScheme != csv-edit",
-					"command": "edit-csv.edit",
-					"group": "navigation"
-				},
-				{
-					"when": "editorLangId == 'csv (equals)' && resourceScheme != csv-edit",
-					"command": "edit-csv.edit",
-					"group": "navigation"
-				},
-				{
-					"when": "editorLangId == 'csv (dot)' && resourceScheme != csv-edit",
-					"command": "edit-csv.edit",
-					"group": "navigation"
-				},
-				{
-					"when": "editorLangId == 'csv (hyphen)' && resourceScheme != csv-edit",
-					"command": "edit-csv.edit",
-					"group": "navigation"
-				}
-			],
-			"editor/title/context": [
-				{
-					"when": "resourceLangId == csv && resourceScheme != csv-edit",
-					"command": "edit-csv.edit",
-					"group": "navigation"
-				},
-				{
-					"when": "resourceLangId == tsv && resourceScheme != csv-edit",
-					"command": "edit-csv.edit",
-					"group": "navigation"
-				},
-				{
-					"when": "resourceLangId == CSV && resourceScheme != csv-edit",
-					"command": "edit-csv.edit",
-					"group": "navigation"
-				},
-				{
-					"when": "resourceLangId == TSV && resourceScheme != csv-edit",
-					"command": "edit-csv.edit",
-					"group": "navigation"
-				},
-				{
-					"when": "resourceLangId == 'CSV (semicolon)' && resourceScheme != csv-edit",
 					"command": "edit-csv.edit",
 					"group": "navigation"
 				},
@@ -513,7 +354,7 @@
 				},
 				"csv-edit.shouldWatchCsvSourceFile": {
 					"type": "boolean",
-					"default": true,
+					"default": false,
 					"description": "true: the source csv file is watched for changes. If changes happen the user is notified (maybe the table is automatically reloaded when the table has no changes). false: not watched the source csv file"
 				},
 				"csv-edit.sidePanelAppearance": {

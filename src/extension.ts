@@ -266,7 +266,7 @@ function onDidChangeConfiguration(instanceManager: InstanceManager, e: vscode.Co
 }
 
 function getEditorTitle(document: vscode.TextDocument): string {
-	return `CSV edit ${path.basename(document.fileName)}`
+	return `Edit - ${path.basename(document.fileName)}`
 }
 
 function createNewEditorInstance(context: vscode.ExtensionContext, activeTextEditor: vscode.TextEditor, instanceManager: InstanceManager): void {

@@ -171,31 +171,17 @@ export function createEditorHtml(webview: vscode.Webview, context: vscode.Extens
 										</span>
 				
 										<!-- no css tooltip because we want a delay-->
-										<span class="mar-left-half clickable" onclick="copyPreviewToClipboard()"
-											title="Creates the preview and copies it to the clipboard">
-											<i id="preview-copy-icon" class="fas fa-paste"></i>
-										</span>
 				
-										<span class="mar-left-half clickable" onclick="reRenderTable()" style="margin-left: 2em;"
-											title="Redraws the table. This can fix some measuring issues (e.g. after the font size changed)">
-											<i id="re-render-table-icon" class="fas fa-ruler-combined"></i>
-										</span>
-
-										<span class="mar-left-half clickable" onclick="forceResizeColumns()" style="margin-left: 0.5em;"
-											title="Resizes all column widths to match their content">
-											<i id="force-column-resize-icon" class="fas fa-arrows-alt-h"></i>
-										</span>
-
-										<span id="reload-file" class="clickable" onclick="preReloadFileFromDisk()" style="margin-left: 2em;"
-											title="Reload the csv file content (from disk)">
-											<i class="fas fa-sync-alt"></i>
+									<span id="reload-file" class="clickable" onclick="preReloadFileFromDisk()" style="margin-left: 0.7em;"
+										title="Reload the csv file content (from disk)">Reload
+										<i class="fas fa-sync-alt" style="margin-left: 0.7em;"></i>
 										</span>
 
 										<!-- fixed rows top -->
 										<div class="flexed changeable-indicator" style="margin-left: 2em;">
 											<div>
 												<span id="fixed-rows-icon" class="clickable" title="Set fixed rows top" onclick="_toggleFixedRowsText()">
-													<i class="rotated-90deg fas fa-align-left"></i>
+													<i class="fas fa-align-left"></i>
 												</span>
 												<span id="fixed-rows-text" style="margin-left: 0.5rem;" class="dis-hidden">fixed rows:</span>
 											</div>
@@ -209,7 +195,7 @@ export function createEditorHtml(webview: vscode.Webview, context: vscode.Extens
 										<div class="flexed changeable-indicator" style="margin-left: 1em;">
 											<div>
 												<span id="fixed-columns-icon" class="clickable" title="Set fixed columns left" onclick="_toggleFixedColumnsText()">
-													<i class="fas fa-align-left"></i>
+													<i class="rotated-90deg fas fa-align-left"></i>
 												</span>
 												<span id="fixed-columns-text" style="margin-left: 0.5rem;" class="dis-hidden">fixed columns:</span>
 											</div>
@@ -220,7 +206,7 @@ export function createEditorHtml(webview: vscode.Webview, context: vscode.Extens
 											</div>
 										</div>
 										<!-- toggle readonly mode -->
-										<div class="flexed toggle-btn clickable" style="margin-left: 1em;">
+										<div class="flexed toggle-btn clickable" style="margin-left: 1em; display: none;">
 											<span id="is-readonly-mode-toggle" onclick="toggleReadonlyMode()" 
 											title="Toggls the readonly table mode (SET IN CODE AT STARTUP)">
 												<i class="fas fa-pen"></i>
@@ -477,26 +463,6 @@ export function createEditorHtml(webview: vscode.Webview, context: vscode.Extens
 						</button>
 					</div>
 
-					<button id="btn-apply-changes-to-file-and-save" class="button is-outlined mar-left on-readonly-disable-btn" onclick="postApplyContent(true)">
-						<span class="icon is-small">
-							<i class="fas fa-save"></i>
-						</span>
-						<span>Apply changes to file and save</span>
-						<span class="tooltip is-tooltip-multiline mar-left-half"
-							data-tooltip="Applies the csv content back to the source file and saves the source file (if something changed) [ctrl+s/cmd+s]">
-							<i class="fas fa-question-circle"></i>
-						</span>
-					</button>
-
-					<button id="btn-apply-changes-to-file" class="button is-outlined on-readonly-disable-btn" onclick="postApplyContent(false)">
-						<span class="icon is-small">
-							<i class="fas fa-reply"></i>
-						</span>
-						<span>Apply changes to file</span>
-						<span class="tooltip mar-left-half is-tooltip-multiline" data-tooltip="Applies the csv content back to the source file (if something changed). After this the editor has no unsaved changes.">
-							<i class="fas fa-question-circle"></i>
-						</span>
-					</button>
 
 					<div id="status-info-wrapper">
 						<div>
@@ -506,7 +472,18 @@ export function createEditorHtml(webview: vscode.Webview, context: vscode.Extens
 
 					<div class="flexed">
 
-						<div>
+						<button id="btn-apply-changes-to-file-and-save" class="button is-outlined mar-left on-readonly-disable-btn" onclick="postApplyContent(true)">
+							<span class="icon is-small">
+								<i class="fas fa-save"></i>
+							</span>
+						<span>Save</span>
+							<span class="tooltip is-tooltip-multiline mar-left-half"
+								data-tooltip="Applies the csv content back to the source file and saves the source file (if something changed) [ctrl+s/cmd+s]">
+								<i class="fas fa-question-circle"></i>
+							</span>
+						</button>
+
+						<div style="display: none;">
 							<button id="show-comments-btn" style="margin-right: 1em" class="button is-outlined" onclick="showOrHideAllComments(true)">
 								<span class="icon is-small">
 									<i class="far fa-comments"></i>
@@ -525,23 +502,6 @@ export function createEditorHtml(webview: vscode.Webview, context: vscode.Extens
 							</button>
 						</div>
 
-						<button style="margin-right: 1em" class="button is-outlined on-readonly-disable-btn" onclick="trimAllCells()">
-							<span class="icon is-small">
-								<i class="fas fa-hand-scissors"></i>
-							</span>
-							<span>Trim</span>
-							<span class="tooltip mar-left-half is-tooltip-multiline is-tooltip-left"
-								data-tooltip="Trims every cell (including header row) in the table (removes leading and trailing spaces, tabs, ...). This will clear undo/redo stack!">
-								<i class="fas fa-question-circle"></i>
-							</span>
-						</button>
-
-						<button class="button is-outlined" onclick="toggleHelpModal(true)">
-							<span class="icon is-small">
-								<i class="fas fa-question"></i>
-							</span>
-							<span>Help</span>
-						</button>
 					</div>
 
 				</div>
