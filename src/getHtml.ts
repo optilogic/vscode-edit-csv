@@ -39,7 +39,7 @@ export function createEditorHtml(webview: vscode.Webview, context: vscode.Extens
 	let fontAwesomeCss = _getResourcePath('thirdParty/fortawesome/fontawesome-free/css/all.min.css')
 	//we need to load the font manually because the url() seems to not work properly with vscode-resource
 	const iconFont = _getResourcePath('thirdParty/fortawesome/fontawesome-free/webfonts/fa-solid-900.woff2')
-	let bulmaCss = _getResourcePath('thirdParty/bulma/bulma.min.css')
+	let bulmaCss = _getResourcePath('thirdParty/bulma/bulma.css')
 
 	const mainCss = _getResourcePath('csvEditorHtml/main.css')
 	const darkThemeCss = _getResourcePath('csvEditorHtml/dark.css')
@@ -144,7 +144,7 @@ export function createEditorHtml(webview: vscode.Webview, context: vscode.Extens
 		bodyPageHtml= `
 		<div class="page full-h">
 
-			<div class="all-options">
+			<div class="all-options" style="display:none">
 
 				<table>
 					<thead>
@@ -169,12 +169,12 @@ export function createEditorHtml(webview: vscode.Webview, context: vscode.Extens
 											title="Refresh the preview">
 											<i class="fas fa-redo-alt"></i>
 										</span>
-				
+
 										<!-- no css tooltip because we want a delay-->
-				
-									<span id="reload-file" class="clickable" onclick="preReloadFileFromDisk()" style="margin-left: 0.7em;"
-										title="Reload the csv file content (from disk)">Reload
-										<i class="fas fa-sync-alt" style="margin-left: 0.7em;"></i>
+
+										<span id="reload-file" class="clickable" onclick="preReloadFileFromDisk()" style="margin-left: 0.7em;"
+											title="Reload the csv file content (from disk)">Reload
+											<i class="fas fa-sync-alt" style="margin-left: 0.7em;"></i>
 										</span>
 
 										<!-- fixed rows top -->
@@ -185,7 +185,7 @@ export function createEditorHtml(webview: vscode.Webview, context: vscode.Extens
 												</span>
 												<span id="fixed-rows-text" style="margin-left: 0.5rem;" class="dis-hidden">fixed rows:</span>
 											</div>
-											<div id="fixed-rows-top-info" class="text" style="margin-left: 0.5rem;">0</div>
+											<div id="fixed-rows-top-info-og" class="text" style="margin-left: 0.5rem;">0</div>
 											<div class="changeable" style="margin-left: 0.5rem;">
 												<span class="clickable" onclick="incFixedRowsTop()"><i class="fas fa-chevron-up"></i></span>
 												<span class="clickable" onclick="decFixedRowsTop()"><i class="fas fa-chevron-down"></i></span>
@@ -199,7 +199,7 @@ export function createEditorHtml(webview: vscode.Webview, context: vscode.Extens
 												</span>
 												<span id="fixed-columns-text" style="margin-left: 0.5rem;" class="dis-hidden">fixed columns:</span>
 											</div>
-											<div id="fixed-columns-top-info" class="text" style="margin-left: 0.5rem;">0</div>
+											<div id="fixed-columns-top-info-og" class="text" style="margin-left: 0.5rem;">0</div>
 											<div class="changeable" style="margin-left: 0.5rem;">
 												<span class="clickable" onclick="incFixedColsLeft()"><i class="fas fa-chevron-up"></i></span>
 												<span class="clickable" onclick="decFixedColsLeft()"><i class="fas fa-chevron-down"></i></span>
@@ -426,43 +426,74 @@ export function createEditorHtml(webview: vscode.Webview, context: vscode.Extens
 
 				<div class="separated-btns">
 
-					<div class="side-panel-toggle-wrapper">
+					<div class="side-panel-toggle-wrapper" style="display:none">
 						<div id="left-panel-toggle" class="clickable" onclick="toggleSidePanel()">
 							<i id="left-panel-toggle-icon-expand" class="fas fa-chevron-right left-panel-toggle-icon-expand"></i>
 							<i class="fas fa-chevron-down left-panel-toggle-icon-collapse"></i>
 						</div>
 					</div>
-					
-					<button id="add-row-btn" class="button is-outlined on-readonly-disable-btn" onclick="addRow()">
+
+					<div class="option-title" style="vertical-align: middle; display: inline-flex;">
+					<!-- fixed rows top -->
+					<div class="flexed changeable-indicator">
+						<div>
+							<span id="fixed-rows-icon" class="clickable" title="Set fixed rows top" onclick="_toggleFixedRowsText()">
+								<i class="fas fa-align-left"></i>
+							</span>
+							<span id="fixed-rows-text" style="margin-left: 0.5rem;" class="dis-hidden">fixed rows:</span>
+						</div>
+						<div id="fixed-rows-top-info" class="text" style="margin-left: 0.5rem;">0</div>
+						<div class="changeable" style="margin-left: 0.5rem; display: inline-flex; flex-direction: column; vertical-align: top; margin-top: -3px;">
+							<span class="clickable" onclick="incFixedRowsTop()"><i class="fas fa-chevron-up"></i></span>
+							<span class="clickable" onclick="decFixedRowsTop()"><i class="fas fa-chevron-down"></i></span>
+						</div>
+					</div>
+
+					<!-- fixed columns left -->
+						<div class="flexed changeable-indicator" style="margin-left: 1em; margin-right: 10px;">
+							<div>
+								<span id="fixed-columns-icon" class="clickable" title="Set fixed columns left" onclick="_toggleFixedColumnsText()">
+									<i class="rotated-90deg fas fa-align-left"></i>
+								</span>
+								<span id="fixed-columns-text" style="margin-left: 0.5rem;" class="dis-hidden">fixed columns:</span>
+							</div>
+							<div id="fixed-columns-top-info" class="text" style="margin-left: 0.5rem;">0</div>
+							<div class="changeable" style="margin-left: 0.5rem; display: inline-flex; flex-direction: column; vertical-align: top; margin-top: -3px;">
+								<span class="clickable" onclick="incFixedColsLeft()"><i class="fas fa-chevron-up"></i></span>
+								<span class="clickable" onclick="decFixedColsLeft()"><i class="fas fa-chevron-down"></i></span>
+							</div>
+						</div>
+					</div>
+
+					<button id="add-row-btn" class="button is-outlined on-readonly-disable-btn" style="padding: 3px 5px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; height: 30px;" onclick="addRow()">
 						<span class="icon is-small">
 							<i class="fas fa-plus"></i>
 						</span>
 						<span>Add row</span>
 					</button>
 					<div class="row-col-insert-btns">
-						<button class="button is-outlined on-readonly-disable-btn" onclick="insertRowAbove()" title="Insert row above current row [ctrl+shift+alt+up, ctrl+shift+ins]">
+						<button class="button is-outlined on-readonly-disable-btn" onclick="insertRowAbove()" title="Insert row above current row [ctrl+shift+alt+up, ctrl+shift+ins]" style="border-bottom-left-radius: 0px; border-top-left-radius: 0px; border-bottom-width: 0px; border-bottom-right-radius: 0px;">
 							<i class="fas fas fa-caret-up "></i>
 						</button>
-						<button class="button is-outlined on-readonly-disable-btn" onclick="insertRowBelow() " title="Insert row below current row [ctrl+shift+alt+down, ctrl+ins]">
+						<button class="button is-outlined on-readonly-disable-btn" onclick="insertRowBelow() " title="Insert row below current row [ctrl+shift+alt+down, ctrl+ins]"  title="Insert column right to current column [ctrl+shift+alt+right]" style="border-bottom-left-radius: 0px; border-top-left-radius: 0px; border-top-right-radius: 0px;">
 							<i class="fas fa-caret-down ad"></i>
 						</button>
 					</div>
 
-					<button id="add-col-btn" class="button is-outlined on-readonly-disable-btn" onclick="addColumn()">
+					<button id="add-col-btn" class="button is-outlined on-readonly-disable-btn" style="padding: 3px 5px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; height: 30px;" onclick="addColumn()">
 						<span class="icon is-small">
 							<i class="fas fa-plus"></i>
 						</span>
 						<span>Add column</span>
 					</button>
 					<div class="row-col-insert-btns">
-						<button class="button is-outlined on-readonly-disable-btn" onclick="insertColLeft()" title="Insert column left to current column [ctrl+shift+alt+left]">
+						<button class="button is-outlined on-readonly-disable-btn" onclick="insertColLeft()" title="Insert column left to current column [ctrl+shift+alt+left]" style="border-bottom-left-radius: 0px; border-top-left-radius: 0px; border-bottom-width: 0px; border-bottom-right-radius: 0px;">
 							<i class="fas fas fa-caret-left"></i>
 						</button>
-						<button class="button is-outlined on-readonly-disable-btn" onclick="insertColRight()" title="Insert column right to current column [ctrl+shift+alt+right]">
+						<button class="button is-outlined on-readonly-disable-btn" onclick="insertColRight()" title="Insert column right to current column [ctrl+shift+alt+right]" style="border-bottom-left-radius: 0px; border-top-left-radius: 0px; border-top-right-radius: 0px;">
 							<i class="fas fa-caret-right"></i>
 						</button>
 					</div>
-
 
 					<div id="status-info-wrapper">
 						<div>
@@ -476,11 +507,7 @@ export function createEditorHtml(webview: vscode.Webview, context: vscode.Extens
 							<span class="icon is-small">
 								<i class="fas fa-save"></i>
 							</span>
-						<span>Save</span>
-							<span class="tooltip is-tooltip-multiline mar-left-half"
-								data-tooltip="Applies the csv content back to the source file and saves the source file (if something changed) [ctrl+s/cmd+s]">
-								<i class="fas fa-question-circle"></i>
-							</span>
+							<span>Save</span>
 						</button>
 
 						<div style="display: none;">
@@ -501,7 +528,6 @@ export function createEditorHtml(webview: vscode.Webview, context: vscode.Extens
 								</span>
 							</button>
 						</div>
-
 					</div>
 
 				</div>
@@ -520,7 +546,7 @@ export function createEditorHtml(webview: vscode.Webview, context: vscode.Extens
 						<div class="stat">
 							<div>Numbers sum
 								<span class="tooltip is-tooltip-right is-tooltip-multiline"
-									data-tooltip="The sum of numbers in the selected cells (only connected cells). Only the first number of a cell is used. Arbitrary-precision is powered by big.js">
+									data-tooltip="The sum of numbers in the selected cells (only connected cells). Only the first number of a cell is used.">
 									<i class="far fa-question-circle"></i>
 								</span>
 							</div>

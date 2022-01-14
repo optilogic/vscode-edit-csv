@@ -2009,12 +2009,17 @@ function getIsSidePanelCollapsed(): boolean {
 function toggleSidePanel(shouldCollapse?: boolean) {
 
 	//only in extension (not in browser)
-	if (vscode && shouldCollapse === undefined) {
-		const isSidePanelCollapsed = getIsSidePanelCollapsed()
-		if (isSidePanelCollapsed) {
-			shouldCollapse = false
+	if (shouldCollapse === undefined) {
+		if (vscode) {
+			const isSidePanelCollapsed = getIsSidePanelCollapsed()
+			if (isSidePanelCollapsed) {
+				shouldCollapse = false
+			} else {
+				shouldCollapse = true
+			}
 		} else {
-			shouldCollapse = true
+			const displayed = getComputedStyle(document.documentElement).getPropertyValue('--extension-side-panel-display');
+			shouldCollapse = (displayed === 'flex')
 		}
 	}
 
