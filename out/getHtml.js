@@ -844,6 +844,7 @@ function createEditorHtml(webview, context, initialVars) {
 		<link rel="stylesheet" href="${settingsOverwriteCss}">
 	</head>
 	<body class="vs-code vs-code-settings-font-size">
+	<div hidden> ${`zach's magic number: ${Date.now()}`}</div>
 	<script>
 		var initialConfig = ${JSON.stringify(config)};
 		var initialVars = ${JSON.stringify(initialVars)};
