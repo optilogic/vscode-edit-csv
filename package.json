@@ -430,7 +430,7 @@
 		"buildBrowser": "node ./csvEditorHtml/out/browser/build/build.js"
 	},
 	"dependencies": {
-		"chokidar": "3.4.2"
+		"chokidar": "3.5.3"
 	},
 	"devDependencies": {
 		"@sweetalert2/theme-dark": "^3.2.0",
