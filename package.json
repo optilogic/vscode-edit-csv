@@ -433,7 +433,7 @@
 		"chokidar": "3.4.2"
 	},
 	"devDependencies": {
-		"@sweetalert2/theme-dark": "^3.2.0",
+		"@sweetalert2/theme-dark": "^5.0.12",
 		"@types/big.js": "^4.0.5",
 		"@types/fs-extra": "^9.0.1",
 		"@types/glob": "^7.1.2",
