@@ -435,7 +435,7 @@
 	"devDependencies": {
 		"@sweetalert2/theme-dark": "^3.2.0",
 		"@types/big.js": "^4.0.5",
-		"@types/fs-extra": "^9.0.1",
+		"@types/fs-extra": "^11.0.1",
 		"@types/glob": "^7.1.2",
 		"@types/jsdom": "11.0.4",
 		"@types/mocha": "^2.2.48",
@@ -446,7 +446,7 @@
 		"@types/vscode": "^1.38.0",
 		"bulma-toast": "^2.0.3",
 		"chardet": "^1.2.1",
-		"fs-extra": "^9.0.1",
+		"fs-extra": "^11.1.1",
 		"glob": "^7.1.6",
 		"iconv-lite": "^0.6.2",
 		"jsdom": "16.4.0",
