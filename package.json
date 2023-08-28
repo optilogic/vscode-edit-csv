@@ -444,7 +444,7 @@
 		"@types/papaparse": "4.5.6",
 		"@types/readline-sync": "^1.4.3",
 		"@types/vscode": "^1.38.0",
-		"bulma-toast": "^2.0.3",
+		"bulma-toast": "^2.4.3",
 		"chardet": "^1.2.1",
 		"fs-extra": "^9.0.1",
 		"glob": "^7.1.6",
